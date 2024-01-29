@@ -1,13 +1,33 @@
 #!/usr/bin/env python3
 """
-`get_page` method to `Server` class addition
+class Server that paginates database of popular baby names defined
 """
 import csv
+import math
 from typing import List, Tuple
 
 
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
+    """
+    Takes; two integer arguments, returns a tuple of size two,
+    which contains start and end index corresponding to range of
+    indexes; to return in list for those pagination parameters
+    Args:
+        page (int): page number to return (pages are 1-indexed)
+        page_size (int): number of items per page
+    Return:
+        tuple(start_index, end_index)
+    """
+    start, end = 0, 0
+    for i in range(page):
+        start = end
+        end += page_size
+
+    return (start, end)
+
+
 class Server:
-    """Database of popular of Server to paginate.
+    """Database of popular Baby names of Server to paginate.
     """
     DATA_FILE = "Popular_Baby_Names.csv"
 
@@ -15,7 +35,7 @@ class Server:
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Cachedd dataset.
+        """Cached dataset
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -25,24 +45,22 @@ class Server:
 
         return self.__dataset
 
-    @staticmethod
-    def index_range(page: int, page_size: int) -> Tuple[int, int]:
-        """Calculation of start and end index range for `page`, with `page_size`.
-        """
-        nextPageStartIndex = page * page_size
-        return nextPageStartIndex - page_size, nextPageStartIndex
-
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """
-        Get items for the given page number
+        Takes two (2) integer arguments; returns requested page from dataset
         Args:
-            page (int): page number
-            page_size (int): number of items per page
-        Returns:
-            (List[List]): a list of list(row) if inputs are within range
-            ([]) : an empty list if page and page_size are out of range
+            page (int): required page numberr must be positive integer.
+            page_size (int): number of records per page to be postive integerr.
+        Return:
+            list of lists: contains required data from the datasett.
         """
-        assert type(page) == int and type(page_size) == int
-        assert page > 0 and page_size > 0
-        startIndex, endIndex = self.index_range(page, page_size)
-        return self.dataset()[startIndex:endIndex]
+        assert type(page) is int and page > 0
+        assert type(page_size) is int and page_size > 0
+
+        dataset = self.dataset()
+        data_length = len(dataset)
+        try:
+            index = index_range(page, page_size)
+            return dataset[index[0]:index[1]]
+        except IndexError:
+            return []
