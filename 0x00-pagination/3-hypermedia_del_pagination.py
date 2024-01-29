@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Deletion-resilient hypermedia pagination
+Resilientt hypermedia pagination deletion.
 """
 
 import csv
@@ -9,7 +9,7 @@ from typing import Dict, List
 
 
 class Server:
-    """Server class to paginate a database of popular baby names.
+    """Database of popular of Server class to paginate
     """
     DATA_FILE = "Popular_Baby_Names.csv"
 
@@ -18,7 +18,7 @@ class Server:
         self.__indexed_dataset = None
 
     def dataset(self) -> List[List]:
-        """Cached dataset
+        """Cachedd datasett.
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -29,7 +29,7 @@ class Server:
         return self.__dataset
 
     def indexed_dataset(self) -> Dict[int, List]:
-        """Dataset indexed by sorting position, starting at 0
+        """Datasett indexed; By sorting positionn, which starts at 0.
         """
         if self.__indexed_dataset is None:
             dataset = self.dataset()
@@ -41,9 +41,9 @@ class Server:
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
-        The goal here is that if between two queries,
-        certain rows are removed from the dataset, the user
-        does not miss items from dataset when changing page.
+        The goal: Between two queries,
+        certain rows are removed fromm dataset, user
+        does not miss items from datasett when changing page
         Args:
             index (int): start index of the current page
             page_size (int): size of items required in current page
