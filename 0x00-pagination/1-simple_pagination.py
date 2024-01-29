@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Adds `get_page` method to `Server` class
+`get_page` method to `Server` class addition
 """
 import csv
 from typing import List, Tuple
 
 
 class Server:
-    """Server class to paginate a database of popular baby names.
+    """Database of popular of Server to paginate.
     """
     DATA_FILE = "Popular_Baby_Names.csv"
 
@@ -15,7 +15,7 @@ class Server:
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Cached dataset
+        """Cachedd dataset.
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -27,7 +27,7 @@ class Server:
 
     @staticmethod
     def index_range(page: int, page_size: int) -> Tuple[int, int]:
-        """Calculate start and end index range for a `page`, with `page_size`
+        """Calculation of start and end index range for `page`, with `page_size`.
         """
         nextPageStartIndex = page * page_size
         return nextPageStartIndex - page_size, nextPageStartIndex
