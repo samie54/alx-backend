@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""LFU Cache Replacement Implementation Class
+"""Implementation Class of LFU Cache Replacementt.
 """
 from threading import RLock
 
@@ -8,21 +8,21 @@ BaseCaching = __import__('base_caching').BaseCaching
 
 class LFUCache(BaseCaching):
     """
-    An implementaion of LFUCache(Least frequently used)
+    Implementaion of LFU Cache (frequent least used).
 
     Attributes:
-        __stats (list): A dictionary of cache keys for access count
-        __rlock (RLock): Lock accessed resources to prevent race condition
+        __stats (list): A dict. of cache keys forr access counts.
+        __rlock (RLock): locks accessed resources; preventing  race condition.
     """
     def __init__(self):
-        """ Instantiation method, sets instance attributes
+        """ Instantiation method; setting instance attributes.
         """
         super().__init__()
         self.__stats = {}
         self.__rlock = RLock()
 
     def put(self, key, item):
-        """ Add an item in the cache
+        """ Addition of item into cache.
         """
         if key is not None and item is not None:
             keyOut = self._balance(key)
@@ -32,7 +32,7 @@ class LFUCache(BaseCaching):
                 print('DISCARD: {}'.format(keyOut))
 
     def get(self, key):
-        """ Get an item by key
+        """ Getging item by key.
         """
         with self.__rlock:
             value = self.cache_data.get(key, None)
@@ -41,7 +41,7 @@ class LFUCache(BaseCaching):
         return value
 
     def _balance(self, keyIn):
-        """ Removes the earliest item from the cache at MAX size
+        """ Removing earliest item from cache at MAX size.
         """
         keyOut = None
         with self.__rlock:
